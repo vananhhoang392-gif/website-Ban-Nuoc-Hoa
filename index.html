@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXE SCENT - Nước Hoa Dior & Chanel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #faf9f7;
+        }
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .perfume-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .perfume-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .cart-slide {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .cart-slide.active {
+            transform: translateX(0);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .category-btn.active {
+            background-color: #000;
+            color: white;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass border-b border-gray-200/50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <i data-lucide="sparkles" class="w-8 h-8 text-purple-600"></i>
+                    <span class="font-display text-2xl font-bold tracking-tight">LUXE SCENT</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-sm font-medium hover:text-purple-600 transition-colors">Trang Chủ</a>
+                    <a href="#products" class="text-sm font-medium hover:text-purple-600 transition-colors">Sản Phẩm</a>
+                    <a href="#brands" class="text-sm font-medium hover:text-purple-600 transition-colors">Thương Hiệu</a>
+                    <a href="#about" class="text-sm font-medium hover:text-purple-600 transition-colors">Về Chúng Tôi</a>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+                    <button class="p-2 hover:bg-gray-100 rounded-full transition-colors relative" onclick="toggleCart()">
+                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-purple-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                    </button>
+                    <button class="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors" onclick="toggleMobileMenu()">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 hidden glass-dark">
+        <div class="flex flex-col items-center justify-center h-full space-y-8 text-white">
+            <a href="#home" class="text-2xl font-display" onclick="toggleMobileMenu()">Trang Chủ</a>
+            <a href="#products" class="text-2xl font-display" onclick="toggleMobileMenu()">Sản Phẩm</a>
+            <a href="#brands" class="text-2xl font-display" onclick="toggleMobileMenu()">Thương Hiệu</a>
+            <a href="#about" class="text-2xl font-display" onclick="toggleMobileMenu()">Về Chúng Tôi</a>
+            <button onclick="toggleMobileMenu()" class="absolute top-6 right-6">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-white pt-20">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-40 -right-40 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+            <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute top-40 left-40 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-center md:text-left space-y-6 fade-in">
+                <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/80 border border-purple-200 text-purple-700 text-sm font-medium">
+                    <span class="w-2 h-2 bg-purple-600 rounded-full animate-pulse"></span>
+                    <span>Bộ Sưu Tập Mới 2024</span>
+                </div>
+                <h1 class="font-display text-5xl md:text-7xl font-bold leading-tight text-gray-900">
+                    Hương Thơm của <br>
+                    <span class="gradient-text italic">Sự Tự Tin</span>
+                </h1>
+                <p class="text-lg text-gray-600 max-w-lg md:max-w-none">
+                    Khám phá bộ sưu tập nước hoa cao cấp từ Dior và Chanel. 
+                    Mỗi giọt hương là một tác phẩm nghệ thuật, khẳng định phong cách Gen Z của bạn. ✨
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
+                    <button onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})" 
+                            class="px-8 py-4 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-all transform hover:scale-105 flex items-center justify-center space-x-2">
+                        <span>Khám Phá Ngay</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                    <button class="px-8 py-4 bg-white text-gray-900 border border-gray-200 rounded-full font-medium hover:bg-gray-50 transition-all flex items-center justify-center space-x-2">
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                        <span>Xem Video</span>
+                    </button>
+                </div>
+                
+                <div class="flex items-center justify-center md:justify-start space-x-6 pt-8 text-sm text-gray-500">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                        <span>Chính Hãng 100%</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="truck" class="w-4 h-4 text-blue-500"></i>
+                        <span>Free Ship</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="refresh-cw" class="w-4 h-4 text-purple-500"></i>
+                        <span>Đổi Trả 30 Ngày</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative flex items-center justify-center">
+                <div class="relative w-full max-w-md aspect-square">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full opacity-20 blur-2xl"></div>
+                    <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=800&auto=format&fit=crop&q=80" 
+                         alt="Luxury Perfume" 
+                         class="relative z-10 w-full h-full object-contain float-animation drop-shadow-2xl rounded-3xl">
+                    
+                    <!-- Floating Cards -->
+                    <div class="absolute -left-8 bottom-20 glass p-4 rounded-2xl shadow-lg float-animation" style="animation-delay: 1s;">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                <i data-lucide="award" class="w-5 h-5 text-purple-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500">Chất lượng</p>
+                                <p class="font-bold text-sm">Premium</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute -right-4 top-20 glass p-4 rounded-2xl shadow-lg float-animation" style="animation-delay: 2s;">
+                        <div class="flex items-center space-x-2 text-yellow-500">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1">2,000+ đánh giá</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section id="brands" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <p class="text-purple-600 font-medium mb-2">Thương Hiệu Cao Cấp</p>
+                <h2 class="font-display text-3xl md:text-4xl font-bold text-gray-900">Đối Tác Của Chúng Tôi</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="flex flex-col items-center space-y-2 cursor-pointer hover:opacity-100 transition-all transform hover:scale-110">
+                    <div class="w-24 h-24 bg-black rounded-full flex items-center justify-center text-white font-display text-2xl font-bold">DIOR</div>
+                    <span class="text-sm font-medium">Christian Dior</span>
+                </div>
+                <div class="flex flex-col items-center space-y-2 cursor-pointer hover:opacity-100 transition-all transform hover:scale-110">
+                    <div class="w-24 h-24 bg-black rounded-full flex items-center justify-center text-white font-display text-xl font-bold">C</div>
+                    <span class="text-sm font-medium">Chanel</span>
+                </div>
+                <div class="flex flex-col items-center space-y-2 cursor-pointer hover:opacity-100 transition-all transform hover:scale-110">
+                    <div class="w-24 h-24 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-lg">YSL</div>
+                    <span class="text-sm font-medium">Yves Saint Laurent</span>
+                </div>
+                <div class="flex flex-col items-center space-y-2 cursor-pointer hover:opacity-100 transition-all transform hover:scale-110">
+                    <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-green-400 rounded-full flex items-center justify-center text-white font-bold text-lg">TF</div>
+                    <span class="text-sm font-medium">Tom Ford</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+                <div class="text-center md:text-left mb-6 md:mb-0">
+                    <p class="text-purple-600 font-medium mb-2">Bộ Sưu Tập</p>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold text-gray-900">Nước Hoa Nổi Bật</h2>
+                </div>
+                
+                <!-- Category Filter -->
+                <div class="flex space-x-2 overflow-x-auto scrollbar-hide pb-2">
+                    <button onclick="filterCategory('all')" class="category-btn active px-6 py-2 rounded-full border border-gray-300 text-sm font-medium transition-all whitespace-nowrap">Tất Cả</button>
+                    <button onclick="filterCategory('dior')" class="category-btn px-6 py-2 rounded-full border border-gray-300 text-sm font-medium transition-all whitespace-nowrap">Dior</button>
+                    <button onclick="filterCategory('chanel')" class="category-btn px-6 py-2 rounded-full border border-gray-300 text-sm font-medium transition-all whitespace-nowrap">Chanel</button>
+                    <button onclick="filterCategory('limited')" class="category-btn px-6 py-2 rounded-full border border-gray-300 text-sm font-medium transition-all whitespace-nowrap">Limited Edition</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Products will be injected by JavaScript -->
+            </div>
+
+            <div class="text-center mt-12">
+                <button class="px-8 py-3 border border-gray-300 rounded-full text-sm font-medium hover:bg-black hover:text-white transition-all">
+                    Xem Thêm Sản Phẩm
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-3xl bg-purple-50 text-center hover:bg-purple-100 transition-colors">
+                    <div class="w-16 h-16 bg-purple-200 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-purple-700"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Chính Hãng 100%</h3>
+                    <p class="text-gray-600 text-sm">Cam kết sản phẩm chính hãng từ nhà phân phối uy tín. Hoàn tiền gấp đôi nếu phát hiện hàng giả.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-pink-50 text-center hover:bg-pink-100 transition-colors">
+                    <div class="w-16 h-16 bg-pink-200 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="gift" class="w-8 h-8 text-pink-700"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Gói Quà Miễn Phí</h3>
+                    <p class="text-gray-600 text-sm">Dịch vụ gói quà sang trọng miễn phí cho mọi đơn hàng. Tặng thiệp viết tay theo yêu cầu.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-blue-50 text-center hover:bg-blue-100 transition-colors">
+                    <div class="w-16 h-16 bg-blue-200 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="headphones" class="w-8 h-8 text-blue-700"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Tư Vấn 24/7</h3>
+                    <p class="text-gray-600 text-sm">Đội ngũ chuyên gia nước hoa sẵn sàng tư vấn giúp bạn chọn được mùi hương phù hợp nhất.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Khách Hàng Nói Gì? 💬</h2>
+                <p class="text-gray-400">Hơn 10,000+ khách hàng hài lòng</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-dark p-6 rounded-2xl border border-gray-700">
+                    <div class="flex items-center space-x-1 text-yellow-400 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Mua Miss Dior ở đây, mùi thơm cực kỳ lâu và đúng chuẩn authentic. Đóng gói cẩn thận, ship nhanh nữa!"</p>
+                    <div class="flex items-center space-x-3">
+                        <img src="http://static.photos/people/200x200/1" alt="User" class="w-10 h-10 rounded-full object-cover">
+                        <div>
+                            <p class="font-medium">Nguyễn Minh Anh</p>
+                            <p class="text-sm text-gray-500">@minhanh.beauty</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-dark p-6 rounded-2xl border border-gray-700">
+                    <div class="flex items-center space-x-1 text-yellow-400 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Chanel No.5 mua tặng mẹ, bà cực kỳ thích. Shop tư vấn nhiệt tình, sẽ quay lại mua dài dài!"</p>
+                    <div class="flex items-center space-x-3">
+                        <img src="http://static.photos/people/200x200/2" alt="User" class="w-10 h-10 rounded-full object-cover">
+                        <div>
+                            <p class="font-medium">Trần Hà My</p>
+                            <p class="text-sm text-gray-500">@hamy.luxury</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-dark p-6 rounded-2xl border border-gray-700">
+                    <div class="flex items-center space-x-1 text-yellow-400 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Gen Z như mình rất thích cách shop thiết kế web, bắt trend và nhiều mã giảm giá cực hời!"</p>
+                    <div class="flex items-center space-x-3">
+                        <img src="http://static.photos/people/200x200/3" alt="User" class="w-10 h-10 rounded-full object-cover">
+                        <div>
+                            <p class="font-medium">Lê Khánh Linh</p>
+                            <p class="text-sm text-gray-500">@khanhlinh.style</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-20 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Nhận Ưu Đãi Độc Quyền 🎁</h2>
+            <p class="text-purple-100 mb-8">Đăng ký nhận tin để được giảm 15% cho đơn hàng đầu tiên và cập nhật xu hướng nước hoa mới nhất.</p>
+            <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã đăng ký!');">
+                <input type="email" placeholder="Nhập email của bạn" class="flex-1 px-6 py-3 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
+                <button type="submit" class="px-8 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2">
+                    <span>Đăng Ký</span>
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 pt-16 pb-8 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="sparkles" class="w-6 h-6 text-purple-600"></i>
+                        <span class="font-display text-xl font-bold">LUXE SCENT</span>
+                    </div>
+                    <p class="text-gray-600 text-sm">Nơi hương thơm gặp gỡ phong cách. Chuyên nước hoa cao cấp Dior, Chanel chính hãng cho thế hệ Gen Z.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors">
+                            <i data-lucide="facebook" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors">
+                            <i data-lucide="tiktok" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Sản Phẩm</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Nước Hoa Nữ</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Nước Hoa Nam</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Unisex</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Gift Sets</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Hỗ Trợ</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Câu Hỏi Thường Gặp</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Chính Sách Đổi Trả</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Vận Chuyển</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Liên Hệ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Liên Hệ</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            <span>123 Nguyễn Huệ, Q.1, TP.HCM</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                            <span>1900 1234</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                            <span>hello@luxescent.vn</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500">&copy; 2024 Luxe Scent. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <i data-lucide="credit-card" class="w-6 h-6 text-gray-400"></i>
+                    <i data-lucide="wallet" class="w-6 h-6 text-gray-400"></i>
+                    <i data-lucide="banknote" class="w-6 h-6 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity" onclick="toggleCart()"></div>
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white z-50 cart-slide shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+            <h2 class="font-display text-xl font-bold">Giỏ Hàng 🛍️</h2>
+            <button onclick="toggleCart()" class="p-2 hover:bg-gray-100 rounded-full">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <div id="empty-cart" class="text-center text-gray-500 py-12">
+                <i data-lucide="shopping-bag" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+                <p>Giỏ hàng trống</p>
+                <button onclick="toggleCart(); document.getElementById('products').scrollIntoView({behavior: 'smooth'})" 
+                        class="mt-4 text-purple-600 font-medium hover:underline">Mua sắm ngay</button>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200 p-6 space-y-4 bg-gray-50">
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600">Tạm tính</span>
+                <span id="cart-total" class="font-bold text-lg">0đ</span>
+            </div>
+            <button onclick="checkout()" class="w-full py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2">
+                <span>Thanh Toán</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg flex items-center space-x-3 transition-all duration-300 opacity-0 translate-y-10 pointer-events-none z-50">
+        <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+        <span id="toast-message">Sản phẩm đã được thêm vào giỏ hàng!</span>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Product Data
+        const products = [
+            {
+                id: 1,
+                name: "Miss Dior Blooming Bouquet",
+                brand: "dior",
+                price: 2850000,
+                originalPrice: 3200000,
+                image: "http://static.photos/cosmetic/400x500/1",
+                category: "Nữ",
+                size: "100ml",
+                tag: "Bán chạy"
+            },
+            {
+                id: 2,
+                name: "Sauvage Dior",
+                brand: "dior",
+                price: 3100000,
+                originalPrice: 3500000,
+                image: "http://static.photos/cosmetic/400x500/2",
+                category: "Nam",
+                size: "100ml",
+                tag: "Hot"
+            },
+            {
+                id: 3,
+                name: "Chanel No.5 EDP",
+                brand: "chanel",
+                price: 4200000,
+                originalPrice: 4500000,
+                image: "http://static.photos/cosmetic/400x500/3",
+                category: "Nữ",
+                size: "100ml",
+                tag: "Limited"
+            },
+            {
+                id: 4,
+                name: "Bleu de Chanel",
+                brand: "chanel",
+                price: 3800000,
+                originalPrice: 4200000,
+                image: "http://static.photos/cosmetic/400x500/4",
+                category: "Nam",
+                size: "100ml",
+                tag: "Classic"
+            },
+            {
+                id: 5,
+                name: "J'adore Dior",
+                brand: "dior",
+                price: 2950000,
+                originalPrice: 3300000,
+                image: "http://static.photos/cosmetic/400x500/5",
+                category: "Nữ",
+                size: "50ml",
+                tag: "New"
+            },
+            {
+                id: 6,
+                name: "Chanel Chance EDP",
+                brand: "chanel",
+                price: 3500000,
+                originalPrice: null,
+                image: "http://static.photos/cosmetic/400x500/6",
+                category: "Nữ",
+                size: "100ml",
+                tag: "Best Seller"
+            },
+            {
+                id: 7,
+                name: "Dior Homme Intense",
+                brand: "dior",
+                price: 2750000,
+                originalPrice: 3000000,
+                image: "http://static.photos/cosmetic/400x500/7",
+                category: "Nam",
+                size: "100ml",
+                tag: null
+            },
+            {
+                id: 8,
+                name: "Coco Mademoiselle",
+                brand: "chanel",
+                price: 3900000,
+                originalPrice: 4300000,
+                image: "http://static.photos/cosmetic/400x500/8",
+                category: "Nữ",
+                size: "100ml",
+                tag: "Limited"
+            }
+        ];
+
+        let cart = [];
+        let currentCategory = 'all';
+
+        // Format currency
+        function formatCurrency(price) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+        }
+
+        // Render products
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            
+            const filteredProducts = currentCategory === 'all' 
+                ? products 
+                : currentCategory === 'limited'
+                ? products.filter(p => p.tag === 'Limited')
+                : products.filter(p => p.brand === currentCategory);
+
+            filteredProducts.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'perfume-card bg-white rounded-2xl overflow-hidden border border-gray-100 group cursor-pointer fade-in';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                card.innerHTML = `
+                    <div class="relative aspect-[4/5] overflow-hidden bg-gray-100">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        ${product.tag ? `
+                            <div class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur text-xs font-bold rounded-full">
+                                ${product.tag}
+                            </div>
+                        ` : ''}
+                        ${product.originalPrice ? `
+                            <div class="absolute top-3 right-3 px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full">
+                                -${Math.round((1 - product.price/product.originalPrice) * 100)}%
+                            </div>
+                        ` : ''}
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                            <button onclick="addToCart(${product.id})" class="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors shadow-lg">
+                                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                            </button>
+                            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors shadow-lg">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-xs text-gray-500 mb-1 uppercase tracking-wider">${product.brand}</div>
+                        <h3 class="font-medium text-gray-900 mb-1 line-clamp-1">${product.name}</h3>
+                        <div class="flex items-center space-x-2 mb-2">
+                            <span class="text-sm text-gray-500">${product.size}</span>
+                            <span class="text-gray-300">•</span>
+                            <span class="text-sm text-gray-500">${product.category}</span>
+                        </div>
+                        <div class="flex items-baseline space-x-2">
+                            <span class="font-bold text-lg text-purple-600">${formatCurrency(product.price)}</span>
+                            ${product.originalPrice ? `<span class="text-sm text-gray-400 line-through">${formatCurrency(product.originalPrice)}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // Filter category
+        function filterCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('onclick').includes(category)) {
+                    btn.classList.add('active');
+                }
+            });
+            renderProducts();
+        }
+
+        // Cart functions
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCart();
+            showToast(`Đã thêm ${product.name} vào giỏ hàng!`);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        function updateQuantity(productId, delta) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCart();
+                }
+            }
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div id="empty-cart" class="text-center text-gray-500 py-12">
+                        <i data-lucide="shopping-bag" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+                        <p>Giỏ hàng trống</p>
+                        <button onclick="toggleCart(); document.getElementById('products').scrollIntoView({behavior: 'smooth'})" 
+                                class="mt-4 text-purple-600 font-medium hover:underline">Mua sắm ngay</button>
+                    </div>
+                `;
+                cartCount.classList.add('hidden');
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="flex space-x-4 p-4 bg-gray-50 rounded-xl">
+                        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h4 class="font-medium text-sm line-clamp-1 mb-1">${item.name}</h4>
+                            <p class="text-purple-600 font-bold text-sm mb-2">${formatCurrency(item.price)}</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2 bg-white rounded-lg border border-gray-200">
+                                    <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <span class="w-8 text-center text-sm font-medium">${item.quantity}</span>
+                                    <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                cartTotal.textContent = formatCurrency(total);
+                cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCount.classList.remove('hidden');
+            }
+            lucide.createIcons();
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                overlay.classList.add('hidden');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            } else {
+                sidebar.classList.add('active');
+                overlay.classList.remove('hidden');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showToast('Giỏ hàng trống!');
+                return;
+            }
+            alert('Chuyển đến trang thanh toán...');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // Scroll effect for navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+
+        // Initial render
+        renderProducts();
+
+        // Add custom styles for blob animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes blob {
+                0% { transform: translate(0px, 0px) scale(1); }
+                33% { transform: translate(30px, -50px) scale(1.1); }
+                66% { transform: translate(-20px, 20px) scale(0.9); }
+                100% { transform: translate(0px, 0px) scale(1); }
+            }
+            .animate-blob {
+                animation: blob 7s infinite;
+            }
+            .animation-delay-2000 {
+                animation-delay: 2s;
+            }
+            .animation-delay-4000 {
+                animation-delay: 4s;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
